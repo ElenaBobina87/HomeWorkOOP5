@@ -1,6 +1,7 @@
 package notebook.util.mapper.impl;
 
 import notebook.util.mapper.Mapper;
+import notebook.view.UserView;
 import notebook.model.User;
 
 public class UserMapper implements Mapper {
@@ -27,5 +28,13 @@ public class UserMapper implements Mapper {
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+
+    public User createUser() {
+        UserView uv = new UserView(null);
+        String firstName = uv.prompt("Имя: ");
+        String lastName = uv.prompt("Фамилия: ");
+        String phone = uv.prompt("Номер телефона: ");
+        return new User(firstName, lastName, phone);
     }
 }

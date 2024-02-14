@@ -11,4 +11,6 @@ public interface GBRepository {
     Optional<User> findById(Long id);
     Optional<User> update(Long userId, User update);
     boolean delete(Long id);
+    void saveAll(List<String> data);
+    List<String> readAll();
 }

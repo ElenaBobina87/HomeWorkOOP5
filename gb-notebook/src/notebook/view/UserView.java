@@ -4,6 +4,7 @@ package notebook.view;
 import notebook.controller.UserController;
 import notebook.model.User;
 import notebook.util.Commands;
+import notebook.util.mapper.impl.UserMapper;
 
 import java.util.Scanner;
 
@@ -22,12 +23,17 @@ public class UserView {
             String command = prompt("Введите команду: ");
             com = Commands.valueOf(command);
             if (com == Commands.EXIT) return;
+            UserMapper um = new UserMapper();
             switch (com) {
+                case DELETE:
+                    String userID = prompt("Enter user id: ");
+                    userController.deleteUser(userID);
+                    break;
                 case LIST:
                     System.out.println(userController.readAll());
                     break;
                 case CREATE:
-                    User u = createUser();
+                    User u = um.createUser();
                     userController.saveUser(u);
                     break;
                 case READ:
@@ -42,21 +48,16 @@ public class UserView {
                     break;
                 case UPDATE:
                     String userId = prompt("Enter user id: ");
-                    userController.updateUser(userId, createUser());
+                    userController.updateUser(userId, um.createUser());
             }
         }
     }
 
-    private String prompt(String message) {
+    public String prompt(String message) {
         Scanner in = new Scanner(System.in);
         System.out.print(message);
         return in.nextLine();
     }
 
-    private User createUser() {
-        String firstName = prompt("Имя: ");
-        String lastName = prompt("Фамилия: ");
-        String phone = prompt("Номер телефона: ");
-        return new User(firstName, lastName, phone);
-    }
+    
 }

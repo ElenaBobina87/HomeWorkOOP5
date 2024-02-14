@@ -36,4 +36,11 @@ public class UserController implements Controller{
     public List<User> readAll() {
         return repository.findAll();
     }
+
+    public void deleteUser(String userID) {
+        //delete.setId(Long.parseLong(userID));
+        repository.delete(Long.parseLong(userID));
+    }
+
+    
 }
